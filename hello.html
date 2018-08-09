@@ -131,12 +131,12 @@
       <div style="display:table;margin:auto;margin-top:3em;width:100%;">
         <div style="display:table;width:70%;margin:auto;">
           <div style="float:left;display:table;width:45%;">
-            <button class="btn btn-block in-collapse" id="" data-target=".valores" data-toggle="collapse" style="text-align: center;font-size: 19px;height:5em;background-color: #361A5E;color:#fff;font-weight:600;width:100%;margin:auto;">
+            <button class="btn btn-block in-collapse" id="valores" data-target=".valores" data-toggle="collapse" style="text-align: center;font-size: 19px;height:5em;background-color: #361A5E;color:#fff;font-weight:600;width:100%;margin:auto;">
               <p>Nossa Missão e Valores</p>
             </button>
           </div>
           <div style="float:right;display:table;width:45%;">
-            <button class="btn btn-block in-collapse" id="" data-target=".colaboradores" data-toggle="collapse" style="text-align: center;font-size: 19px;height:5em;background-color: #361A5E;color:#fff;font-weight:600;width:100%;margin:auto;">
+            <button class="btn btn-block in-collapse" id="colaboradores" data-target=".colaboradores" data-toggle="collapse" style="text-align: center;font-size: 19px;height:5em;background-color: #361A5E;color:#fff;font-weight:600;width:100%;margin:auto;">
               <p>Como desenvolvemos
                 <br>nossos colaboradores</p>
             </button>
@@ -201,6 +201,22 @@
     
     </div>
     <!-- content -->
+
+    <script>
+      $("#valores").click(function() {
+        $(this).css("background-color", "red");
+        $(".valores").slideDown(1000);
+        $(".colaboradores").slideUp(1000);
+        $("#colaboradores").css("background-color", "#361A5E");
+      });
+
+      $("#colaboradores").click(function () {
+        $(this).css("background-color", "red");
+        $(".colaboradores").slideDown(1000);
+        $(".valores").slideUp(1000);
+        $("#valores").css("background-color", "#361A5E");
+      });
+    </script>
 
   </body>
 </html>
