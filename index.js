@@ -1,63 +1,69 @@
-let preview = document.getElementById("preview");
-let recording = document.getElementById("recording");
-let startButton = document.getElementById("startButton");
-let stopButton = document.getElementById("stopButton");
-let downloadButton = document.getElementById("downloadButton");
-let logElement = document.getElementById("log");
+window.onload = function () {
 
-let recordingTimeMS = 5000;
-function log(msg) {
-  logElement.innerHTML += msg + "\n";
-}
-function wait(delayInMS) {
-  return new Promise(resolve => setTimeout(resolve, delayInMS));
-}
-function startRecording(stream, lengthInMS) {
-  let recorder = new MediaRecorder(stream);
-  let data = [];
+  let preview = document.getElementById("preview");
+  let recording = document.getElementById("recording");
+  let startButton = document.getElementById("startButton");
+  let stopButton = document.getElementById("stopButton");
+  let downloadButton = document.getElementById("downloadButton");
+  let logElement = document.getElementById("log");
 
-  recorder.ondataavailable = event => data.push(event.data);
-  recorder.start();
-  log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
+  let recordingTimeMS = 5000;
+  function log(msg) {
+    logElement.innerHTML += msg + "\n";
+  }
+  function wait(delayInMS) {
+    return new Promise(resolve => setTimeout(resolve, delayInMS));
+  }
+  function startRecording(stream, lengthInMS) {
+    let recorder = new MediaRecorder(stream);
+    let data = [];
 
-  let stopped = new Promise((resolve, reject) => {
-    recorder.onstop = resolve;
-    recorder.onerror = event => reject(event.name);
-  });
+    recorder.ondataavailable = event => data.push(event.data);
+    recorder.start();
+    log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
 
-  let recorded = wait(lengthInMS).then(
-    () => recorder.state == "recording" && recorder.stop()
-  );
+    let stopped = new Promise((resolve, reject) => {
+      recorder.onstop = resolve;
+      recorder.onerror = event => reject(event.name);
+    });
 
-  return Promise.all([
-    stopped,
-    recorded
-  ])
-    .then(() => data);
-}
-function stop(stream) {
-  stream.getTracks().forEach(track => track.stop());
-}
-startButton.addEventListener("click", function () {
-  navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: true
-  }).then(stream => {
-    preview.srcObject = stream;
-    downloadButton.href = stream;
-    preview.captureStream = preview.captureStream || preview.mozCaptureStream;
-    return new Promise(resolve => preview.onplaying = resolve);
-  }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
-    .then(recordedChunks => {
-      let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-      recording.src = URL.createObjectURL(recordedBlob);
-      downloadButton.href = recording.src;
-      downloadButton.download = "RecordedVideo.webm";
+    let recorded = wait(lengthInMS).then(
+      () => recorder.state == "recording" && recorder.stop()
+    );
 
-      log("Successfully recorded " + recordedBlob.size + " bytes of " +
-        recordedBlob.type + " media.");
-    })
-    .catch(log);
-}, false); stopButton.addEventListener("click", function () {
-  stop(preview.srcObject);
-}, false);
+    return Promise.all([
+      stopped,
+      recorded
+    ])
+      .then(() => data);
+  }
+  function stop(stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+
+  startButton.addEventListener("click", function () {
+    navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    }).then(stream => {
+      preview.srcObject = stream;
+      downloadButton.href = stream;
+      preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+      return new Promise(resolve => preview.onplaying = resolve);
+    }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+      .then(recordedChunks => {
+        let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+        recording.src = URL.createObjectURL(recordedBlob);
+        downloadButton.href = recording.src;
+        downloadButton.download = "RecordedVideo.webm";
+
+        log("Successfully recorded " + recordedBlob.size + " bytes of " +
+          recordedBlob.type + " media.");
+      })
+      .catch(log);
+  }, false);
+
+  stopButton.addEventListener("click", function () {
+    stop(preview.srcObject);
+  }, false);
+};
