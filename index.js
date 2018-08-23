@@ -33,7 +33,7 @@ window.onload = function () {
 
   window.onload = function () {
     var fiveMinutes = 30,
-      display = document.querySelector('#log');
+      display = document.getElementById('log');
     startTimer(fiveMinutes, display);
   };
 
