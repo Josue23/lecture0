@@ -14,28 +14,12 @@ window.onload = function () {
 
 
   // exibe countdown timer
-  function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10)
-      seconds = parseInt(timer % 60, 10);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      display.textContent = seconds;
-
-      if (--timer < 0) {
-        timer = duration;
-      }
-    }, 1000);
-  }
-
-  window.onload = function () {
-    var fiveMinutes = 30,
-      display = document.getElementById('mensagem');
-    startTimer(fiveMinutes, display);
-  };
+  var timeleft = 30;
+  var downloadTimer = setInterval(function () {
+    document.getElementById("countdown").value = 30 - --timeleft;
+    if (timeleft <= 0)
+      clearInterval(downloadTimer);
+  }, 1000);
 
 
   let recordingTimeMS = 15000;
