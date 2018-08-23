@@ -18,6 +18,7 @@ window.onload = function () {
   var downloadTimer = setInterval(function () {
     timeleft--;
     document.getElementById("countdowntimer").textContent = timeleft;
+    document.getElementById("progressBar").textContent = timeleft;
     if (timeleft <= 0)
       clearInterval(downloadTimer);
   }, 1000);
