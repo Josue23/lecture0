@@ -7,7 +7,12 @@ window.onload = function () {
   let downloadButton = document.getElementById("downloadButton");
   let logElement = document.getElementById("log");
 
-  let recordingTimeMS = 5000;
+  // video autoplay but with a x seconds of delay
+  setTimeout(function () {
+    document.getElementById("preview").play();
+  }, 5000);
+
+  let recordingTimeMS = 15000;
   function log(msg) {
     logElement.innerHTML += msg + "\n";
   }
