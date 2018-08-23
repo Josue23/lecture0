@@ -8,9 +8,9 @@ window.onload = function () {
   let logElement = document.getElementById("log");
 
   // video autoplay but with a x seconds of delay
-  setTimeout(function () {
-    document.getElementById("preview").play();
-  }, 5000);
+  // setTimeout(function () {
+  //   document.getElementById("preview").play();
+  // }, 5000);
 
 
   // exibe countdown timer
