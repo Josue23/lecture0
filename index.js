@@ -73,8 +73,8 @@ window.onload = function () {
         // downloadButton.href = recording.src;
         // downloadButton.download = "RecordedVideo.webm";
 
-        log("Successfully recorded " + recordedBlob.size + " bytes of " +
-          recordedBlob.type + " media.");
+        // log("Successfully recorded " + recordedBlob.size + " bytes of " +
+          // recordedBlob.type + " media.");
       })
       .catch(log);
   }, false);
