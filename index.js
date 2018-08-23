@@ -16,11 +16,11 @@ window.onload = function () {
   // exibe countdown timer
   var timeleft = 30;
   var downloadTimer = setInterval(function () {
-    document.getElementById("countdown").value = 30 - --timeleft;
+    timeleft--;
+    document.getElementById("countdowntimer").textContent = timeleft;
     if (timeleft <= 0)
       clearInterval(downloadTimer);
   }, 1000);
-
 
   let recordingTimeMS = 15000;
   function log(msg) {
