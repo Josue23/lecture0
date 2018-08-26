@@ -53,6 +53,8 @@ window.onload = function () {
     ])
       .then(() => data);
   }
+
+
   function stop(stream) {
     stream.getTracks().forEach(track => track.stop());
   }
