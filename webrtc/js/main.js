@@ -61,7 +61,8 @@ playButton.addEventListener('click', () => {
 
 const downloadButton = document.querySelector('button#download');
 downloadButton.addEventListener('click', () => {
-  const blob = new Blob(recordedBlobs, { type: 'video/webm' });
+  // const blob = new Blob(recordedBlobs, { type: 'video/webm' });
+  const blob = new Blob(recordedBlobs, { type: 'video/mp4' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.style.display = 'none';
