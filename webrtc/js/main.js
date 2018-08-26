@@ -20,7 +20,7 @@ let recordedBlobs;
 let sourceBuffer;
 
 const recordedVideo = document.querySelector('video#recorded');
-recordedVideo.addEventListener('error', function(ev) {
+recordedVideo.addEventListener('error', function (ev) {
   console.error('MediaRecording.recordedMedia.error()');
   alert(`Your browser can not play ${recordedVideo.src} media clip. event: ${JSON.stringify(ev)}`);
 }, true);
@@ -39,16 +39,16 @@ recordButton.addEventListener('click', () => {
 
 const playButton = document.querySelector('button#play');
 playButton.addEventListener('click', () => {
-  const superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
+  const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
   recordedVideo.src = window.URL.createObjectURL(superBuffer);
   // workaround for non-seekable video taken from
   // https://bugs.chromium.org/p/chromium/issues/detail?id=642012#c23
   recordedVideo.addEventListener('loadedmetadata', () => {
     if (recordedVideo.duration === Infinity) {
       recordedVideo.currentTime = 1e101;
-      recordedVideo.ontimeupdate = function() {
+      recordedVideo.ontimeupdate = function () {
         recordedVideo.currentTime = 0;
-        recordedVideo.ontimeupdate = function() {
+        recordedVideo.ontimeupdate = function () {
           delete recordedVideo.ontimeupdate;
           recordedVideo.play();
         };
@@ -61,7 +61,7 @@ playButton.addEventListener('click', () => {
 
 const downloadButton = document.querySelector('button#download');
 downloadButton.addEventListener('click', () => {
-  const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+  const blob = new Blob(recordedBlobs, { type: 'video/webm' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.style.display = 'none';
@@ -105,16 +105,16 @@ function handleStop(event) {
 
 function startRecording() {
   recordedBlobs = [];
-  let options = {mimeType: 'video/webm;codecs=vp9'};
+  let options = { mimeType: 'video/webm;codecs=vp9' };
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.log(options.mimeType + ' is not Supported');
-    options = {mimeType: 'video/webm;codecs=vp8'};
+    options = { mimeType: 'video/webm;codecs=vp8' };
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.log(options.mimeType + ' is not Supported');
-      options = {mimeType: 'video/webm'};
+      options = { mimeType: 'video/webm' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log(options.mimeType + ' is not Supported');
-        options = {mimeType: ''};
+        options = { mimeType: '' };
       }
     }
   }

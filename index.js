@@ -76,7 +76,7 @@ window.onload = function () {
         // downloadButton.download = "RecordedVideo.webm";
 
         // log("Successfully recorded " + recordedBlob.size + " bytes of " +
-          // recordedBlob.type + " media.");
+        // recordedBlob.type + " media.");
       })
       .catch(log);
   }, false);
